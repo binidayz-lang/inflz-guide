@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>챌린지 캘린더 이용가이드 — 인플즈메리</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #FDF8F4;
+  --w: #fff;
+  --t: #2C1A0E;
+  --m: #8B6B52;
+  --p: #C8956C;
+  --pa: #E8A87C;
+  --pl: #F2D4C0;
+  --bd: #EAD9CC;
+  --g: #5BAD7F;
+  --r: #E07A5F;
+  --sh: 0 4px 20px rgba(200,149,108,.12);
+  --rad: 16px;
+  --rads: 10px;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Noto Sans KR', sans-serif;
+  background: var(--bg);
+  color: var(--t);
+  font-size: 14px;
+  line-height: 1.7;
+  padding-bottom: 60px;
+  word-break: keep-all;
+  overflow-wrap: break-word;
+}
+
+/* ── 헤더 */
+.hero {
+  background: linear-gradient(135deg, #2C1A0E 0%, #5C3317 55%, #9D6744 100%);
+  color: #fff;
+  padding: 36px 20px 32px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -60px; right: -60px;
+  width: 220px; height: 220px;
+  border-radius: 50%;
+  background: rgba(200,149,108,.1);
+  pointer-events: none;
+}
+.hero-badge {
+  display: inline-block;
+  background: rgba(200,149,108,.25);
+  border: 1px solid rgba(200,149,108,.4);
+  color: #F2D4C0;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  padding: 4px 16px;
+  border-radius: 20px;
+  margin-bottom: 14px;
+}
+.hero h1 {
+  font-size: 22px;
+  font-weight: 900;
+  margin-bottom: 8px;
+  line-height: 1.4;
+  word-break: keep-all;
+}
+.hero h1 em { color: #E8A87C; font-style: normal; }
+.hero-sub {
+  font-size: 12px;
+  color: rgba(255,255,255,.6);
+  margin-bottom: 20px;
+  line-height: 1.8;
+  word-break: keep-all;
+}
+.hero-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--p);
+  color: #fff;
+  border-radius: 30px;
+  padding: 13px 28px;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: none;
+  box-shadow: 0 6px 20px rgba(200,149,108,.4);
+  transition: opacity .2s;
+}
+.hero-btn:hover { opacity: .88; }
+
+/* ── 로그인 안내 */
+.login-guide {
+  background: #fff;
+  border-radius: var(--rad);
+  padding: 16px;
+  margin: 12px 16px 0;
+  box-shadow: var(--sh);
+  border-left: 4px solid var(--p);
+}
+.login-guide-title {
+  font-size: 13px;
+  font-weight: 900;
+  color: var(--p);
+  margin-bottom: 10px;
+}
+.login-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.login-step {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 13px;
+  word-break: keep-all;
+  line-height: 1.7;
+}
+.login-step-num {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--p);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 900;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+.login-tip {
+  background: #FFF0EC;
+  border-radius: 8px;
+  padding: 9px 12px;
+  font-size: 12px;
+  color: var(--r);
+  margin-top: 10px;
+  line-height: 1.7;
+}
+
+/* ── 탭 네비 */
+.tab-nav-wrap {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--bg);
+  padding: 10px 16px 0;
+  border-bottom: 1px solid var(--bd);
+}
+.tab-nav {
+  display: flex;
+  gap: 4px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  padding-bottom: 0;
+}
+.tab-nav::-webkit-scrollbar { display: none; }
+.tab-btn {
+  flex-shrink: 0;
+  border: none;
+  background: none;
+  padding: 10px 12px;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--m);
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: all .2s;
+  white-space: nowrap;
+}
+.tab-btn.active {
+  color: var(--p);
+  border-bottom-color: var(--p);
+}
+
+/* ── 탭 콘텐츠 */
+.tab-content { display: none; padding: 0 14px; }
+.tab-content.active { display: block; }
+
+/* ── 섹션 */
+.section {
+  background: var(--w);
+  border-radius: var(--rad);
+  padding: 18px 16px;
+  margin-top: 12px;
+  box-shadow: var(--sh);
+}
+.section-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--m);
+  margin-bottom: 6px;
+}
+.section-title {
+  font-size: 17px;
+  font-weight: 900;
+  margin-bottom: 4px;
+}
+.section-desc {
+  font-size: 12px;
+  color: var(--m);
+  margin-bottom: 14px;
+  line-height: 1.8;
+  word-break: keep-all;
+}
+.divider {
+  height: 1px;
+  background: var(--bd);
+  margin: 16px 0;
+}
+
+/* ── 기능 카드 */
+.feature {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  padding: 14px 0;
+  border-bottom: 1px solid #F5ECE4;
+}
+.feature:last-child { border-bottom: none; padding-bottom: 0; }
+.feature:first-child { padding-top: 0; }
+.feature-icon {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+.feature-body { flex: 1; min-width: 0; overflow-wrap: break-word; word-break: keep-all; }
+.feature-name {
+  font-size: 14px;
+  font-weight: 900;
+  margin-bottom: 5px;
+  line-height: 1.4;
+}
+.feature-detail {
+  font-size: 13px;
+  color: var(--m);
+  line-height: 1.9;
+  word-break: keep-all;
+  overflow-wrap: break-word;
+}
+.feature-detail strong { color: var(--t); font-weight: 700; }
+
+/* ── 단계 */
+.steps { display: flex; flex-direction: column; gap: 10px; margin-top: 12px; }
+.step {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+.step-num {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--p), var(--pa));
+  color: #fff;
+  font-size: 12px;
+  font-weight: 900;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+.step-txt { font-size: 13px; line-height: 1.8; word-break: keep-all; overflow-wrap: break-word; }
+.step-txt strong { font-weight: 700; color: var(--t); }
+
+/* ── 팁 박스 */
+.tip {
+  background: #FDF5EE;
+  border-left: 3px solid var(--p);
+  border-radius: 0 10px 10px 0;
+  padding: 11px 14px;
+  font-size: 12px;
+  line-height: 1.9;
+  margin-top: 12px;
+  color: var(--t);
+  word-break: keep-all;
+  overflow-wrap: break-word;
+}
+.tip strong { color: var(--p); }
+.tip-warn {
+  background: #FFF0EC;
+  border-left-color: var(--r);
+}
+.tip-warn strong { color: var(--r); }
+.tip-green {
+  background: #E8F7EE;
+  border-left-color: var(--g);
+}
+.tip-green strong { color: #3A7D58; }
+
+/* ── 배지 */
+.badge {
+  display: inline-block;
+  border-radius: 20px;
+  padding: 2px 10px;
+  font-size: 10px;
+  font-weight: 700;
+  margin-left: 6px;
+  vertical-align: middle;
+}
+.badge-new { background: var(--r); color: #fff; }
+.badge-update { background: #E8F7EE; color: #3A7D58; }
+
+/* ── 툴 버튼 미리보기 */
+.tool-btns {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 12px;
+}
+.tool-btn-preview {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-radius: 10px;
+  padding: 13px 16px;
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: none;
+  width: 100%;
+  justify-content: center;
+}
+.tb-pink { background: linear-gradient(135deg,#FFB5C8,#FF8FAB); color: #fff; }
+.tb-blue { background: linear-gradient(135deg,#B5CCFF,#7F9EFF); color: #fff; }
+.tb-green { background: linear-gradient(135deg,#A8E6CF,#5BAD8F); color: #fff; }
+.tb-dark { background: linear-gradient(135deg,#2C1A0E,#9D6744); color: #fff; }
+
+/* ── 업데이트 로그 */
+.update-log { display: flex; flex-direction: column; gap: 8px; margin-top: 4px; }
+.update-item {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  font-size: 12px;
+}
+.update-date {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--m);
+  white-space: nowrap;
+  min-width: 48px;
+  margin-top: 2px;
+}
+.update-content { color: var(--t); line-height: 1.7; }
+
+/* ── 푸터 */
+.footer {
+  text-align: center;
+  padding: 32px 20px 10px;
+  font-size: 11px;
+  color: var(--m);
+  line-height: 2.2;
+}
+.footer strong { color: var(--p); }
+
+/* ── 모바일 줄바꿈 최적화 */
+* { word-break: keep-all; overflow-wrap: break-word; }
+strong { word-break: keep-all; }
+.feature-detail { font-size: 13px; line-height: 2; }
+.tip { font-size: 12px; line-height: 2; }
+.section-title { font-size: 16px; line-height: 1.5; }
+.hero-sub { font-size: 12px; line-height: 1.9; }
+.login-tip { font-size: 12px; line-height: 1.9; }
+
+@media (max-width: 390px) {
+  .hero h1 { font-size: 20px; }
+  .section-title { font-size: 15px; }
+  .feature-name { font-size: 13px; }
+  .feature-detail { font-size: 12px; }
+  .tab-btn { font-size: 11px; padding: 10px 8px; }
+}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-badge">✦ 인플즈메리네 ✦</div>
+  <h1>챌린지 캘린더<br><em>이용가이드</em></h1>
+  <p class="hero-sub">챌린지 캘린더의 모든 기능을 한곳에서 확인하세요<br>처음이라도 3분이면 다 이해할 수 있어요 😊</p>
+  <a href="https://marryz.co.kr/35" class="hero-btn" target="_blank">📱 챌린지 캘린더 바로가기 →</a>
+</div>
+
+<!-- 로그인 안내 -->
+<div class="login-guide">
+  <div class="login-guide-title">🔑 처음 접속하는 분 — 이렇게 시작하세요</div>
+  <div class="login-steps">
+    <div class="login-step"><div class="login-step-num">1</div><div>링크 접속 후 <strong>이름 + 숫자 4자리 비밀번호</strong> 입력</div></div>
+    <div class="login-step"><div class="login-step-num">2</div><div>처음이면 <strong>자동으로 가입</strong>돼요 — 별도 회원가입 불필요</div></div>
+    <div class="login-step"><div class="login-step-num">3</div><div>레벨 선택 (초급 / 중급 / 고급 / 심화 / 기존수강생) 후 시작일 입력</div></div>
+  </div>
+  <div class="login-tip">⚠️ <strong>비밀번호는 꼭 기억해두세요!</strong><br>같은 이름 + 같은 비번으로 들어오면 폰을 바꿔도, 앱을 지웠다 깔아도 기록이 그대로 이어져요.</div>
+</div>
+
+<!-- 탭 네비게이션 -->
+<div class="tab-nav-wrap">
+  <div class="tab-nav">
+    <button class="tab-btn active" onclick="switchTab('calendar')">📅 캘린더</button>
+    <button class="tab-btn" onclick="switchTab('gongu')">🛒 공구</button>
+    <button class="tab-btn" onclick="switchTab('ipjum')">🏪 입점</button>
+    <button class="tab-btn" onclick="switchTab('notice')">📢 공지</button>
+    <button class="tab-btn" onclick="switchTab('edu')">📆 교육일정</button>
+  </div>
+</div>
+
+<!-- ════════════════════════════════
+  📅 캘린더 탭
+════════════════════════════════ -->
+<div class="tab-content active" id="tab-calendar">
+
+  <div class="section">
+    <div class="section-label">📅 캘린더 탭</div>
+    <div class="section-title">30일 챌린지의 핵심 공간이에요</div>
+    <div class="section-desc">매일 체크하고, 기록하고, 챌린지방에 제출하는 모든 흐름이 여기서 완결돼요.</div>
+
+    <div class="feature">
+      <div class="feature-icon" style="background:#E8F7EE">📊</div>
+      <div class="feature-body">
+        <div class="feature-name">진행 현황 배너</div>
+        <div class="feature-detail">
+          오늘이 <strong>몇 일차인지</strong>, 전체 30일 중 <strong>몇 % 진행됐는지</strong> 한눈에 보여요.<br>
+          레벨과 이름도 함께 표시되고, 날짜가 틀렸으면 <strong>✏️ 날짜 수정 버튼</strong>으로 언제든 고칠 수 있어요.
+        </div>
+      </div>
+    </div>
+
+    <div class="feature">
+      <div class="feature-icon" style="background:#FDF2EA">🗓️</div>
+      <div class="feature-body">
+        <div class="feature-name">30일 달력</div>
+        <div class="feature-detail">
+          <strong>오늘 날짜 칸</strong>을 누르면 완료 체크/해제가 돼요. 초록색으로 바뀌면 오늘 완료!<br>
+          <strong>지난 날짜 칸</strong>을 누르면 그날의 투두와 결과를 수정할 수 있어요.<br>
+          공구일정이 확정된 날엔 달력에 🛒 표시가 자동으로 생겨요.
+        </div>
+      </div>
+    </div>
+
+    <div class="feature">
+      <div class="feature-icon" style="background:#EBF5FD">📋</div>
+      <div class="feature-body">
+        <div class="feature-name">오늘의 투두리스트</div>
+        <div class="feature-detail">
+          오늘 할 일을 입력하고 하나씩 체크하면서 진행해요.<br>
+          <strong>완료 못 한 투두는 다음 날 자동으로 이월</strong>돼요 — 놓친 게 있어도 걱정 없어요.<br>
+          투두 항목은 추가/삭제 모두 자유롭게 할 수 있어요.
+        </div>
+      </div>
+    </div>
+
+    <div class="feature">
+      <div class="feature-icon" style="background:#F4EEF9">✨</div>
+      <div class="feature-body">
+        <div class="feature-name">오늘 해낸 결과 기록</div>
+        <div class="feature-detail">
+          수치, 건수, 구체적인 성과를 자유롭게 적어요.<br>
+          예) <em style="color:var(--m)">DM 제안 5명 / 메일 제안 3명 / 제안 제품: 유기농 그래놀라</em><br>
+          <strong>결과 저장</strong> 버튼 누르면 저장 완료!
+        </div>
+      </div>
+    </div>
+
+    <div class="feature">
+      <div class="feature-icon" style="background:#FFF0EC">📤</div>
+      <div class="feature-body">
+        <div class="feature-name">챌린지방 제출 양식 자동생성</div>
+        <div class="feature-detail">
+          <strong>✨ 양식 생성</strong> 버튼 누르면 투두 + 결과가 합쳐진 제출 양식이 자동으로 완성돼요.<br>
+          <strong>📋 복사</strong> 버튼으로 바로 복사해서 챌린지방에 붙여넣기하면 끝!<br>
+          레벨, 이름, 몇 일차인지가 자동으로 들어가요.
+        </div>
+      </div>
+    </div>
+
+    <div class="tip">
+      <strong>💡 이렇게 쓰면 가장 효과적이에요</strong><br>
+      하루 시작할 때 투두 입력 → 하루 끝날 때 결과 기록 → 양식 생성 후 챌린지방 제출<br>
+      딱 이 흐름으로만 써도 30일이 체계적으로 쌓여요 😊
+    </div>
+  </div>
+
+</div>
+
+<!-- ════════════════════════════════
+  🛒 공구 탭
+════════════════════════════════ -->
+<div class="tab-content" id="tab-gongu">
+
+  <div class="section">
+    <div class="section-label">🛒 공구 탭</div>
+    <div class="section-title">공구일정 관리 + 도구 모음</div>
+    <div class="section-desc">내 공구 진행 상황을 관리하고, 필요한 도구를 바로 열 수 있어요.</div>
+
+    <div class="feature">
+      <div class="feature-icon" style="background:#E8F7EE">🛒</div>
+      <div class="feature-body">
+        <div class="feature-name">공구일정 관리</div>
+        <div class="feature-detail">
+          협찬 / 공구예정 / 공구일정 확정 3가지 유형으로 등록할 수 있어요.<br>
+          <strong>셀러 인스타 주소, 상품명, 시작일~종료일, 메모</strong>까지 한 번에 기록해요.<br>
+          <strong>공구일정 확정</strong>으로 등록하면 캘린더 달력에도 🛒 표시가 자동으로 생겨요.<br>
+          입점 연락이 왔을 때 <strong>💬 메리에게 공유!</strong> 버튼으로 바로 공유할 수 있어요.
+        </div>
+      </div>
+    </div>
+
+    <div class="feature">
+      <div class="feature-icon" style="background:#FFF5F5">⚠️</div>
+      <div class="feature-body">
+        <div class="feature-name">제품이슈 탭 <span class="badge badge-new">NEW</span></div>
+        <div class="feature-detail">
+          메리 + 수강생이 올린 <strong>제품 이슈를 전체 공유</strong>하는 공간이에요.<br>
+          입점 제안 전에 꼭 확인하세요 — 물량 수급 문제, 발송 지연, 업체 이슈 등이 올라와요.<br>
+          입점완료 제품에서 이슈가 생기면 <strong>입점탭 → 이슈 발생 신고</strong>로 등록하면 여기에 자동으로 공개돼요.
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+    <div style="font-size:13px;font-weight:700;margin-bottom:10px">⚡ 바로가기 도구 3종</div>
+
+    <div class="tool-btns">
+      <a href="https://marryz.co.kr/29" target="_blank" class="tool-btn-preview tb-pink">⚡ 5분자동화</a>
+      <a href="https://marryz.co.kr/38" target="_blank" class="tool-btn-preview tb-blue">📄 제안서(간편)</a>
+      <a href="https://marryz.co.kr/36" target="_blank" class="tool-btn-preview tb-green">🃏 공구카드</a>
+    </div>
+
+    <div class="feature" style="margin-top:14px">
+      <div class="feature-icon" style="background:#FFF8E1">⚡</div>
+      <div class="feature-body">
+        <div class="feature-name">5분자동화</div>
+        <div class="feature-detail">
+          입점제안 메일 + DM + 제안서까지 <strong>한 번에 자동으로</strong> 만들어주는 도구예요.<br>
+          상품마스터를 통한 제안서 작성과 DM 양식까지 포함돼 있어서 조금 시간이 걸리지만<strong> 가장 완성도 높은 제안서</strong>가 나와요.<br>
+          처음 쓰는 분은 도구 안의 <strong>? 사용법 버튼</strong>을 먼저 눌러보세요!
+        </div>
+      </div>
+    </div>
+
+    <div class="feature">
+      <div class="feature-icon" style="background:#EBF5FD">📄</div>
+      <div class="feature-body">
+        <div class="feature-name">제안서 간편버전 <span class="badge badge-update">업데이트</span></div>
+        <div class="feature-detail">
+          <strong>급할 때 빠르게</strong> 쓰기 좋은 간편 제안서예요.<br>
+          쇼핑몰관리자 → 인플페이 → 수익시뮬레이터에서 해당 상품 불러와<br>
+          <strong>인플루언서 마진 퍼센트 측정 후 가격 확인 → 입력 → PDF 또는 PNG 저장 → 전달</strong> 끝!<br>
+          5분자동화와 상황에 맞게 둘 다 활용해요.
+        </div>
+      </div>
+    </div>
+
+    <div class="feature">
+      <div class="feature-icon" style="background:#E8F7EE">🃏</div>
+      <div class="feature-body">
+        <div class="feature-name">공구카드 메이커</div>
+        <div class="feature-detail">
+          인플루언서 공구할 때 필요한 <strong>공구카드를 직접 만들어서 바로 저장</strong>할 수 있어요.<br>
+          <strong>리스트형 / 그리드형 / 테이블형 / 오픈카드</strong> 4가지 스타일 선택 가능<br>
+          컬러·폰트·배경 패턴 선택, 옵션별 이미지·가격·배지 입력<br>
+          <strong>인스타 4:5 비율 고정</strong> 기능 있어서 저장하면 PNG로 바로 인스타 업로드 가능!
+        </div>
+      </div>
+    </div>
+
+    <div class="tip tip-green">
+      <strong>💡 도구 선택 가이드</strong><br>
+      시간 여유 있을 때 → <strong>5분자동화</strong> (완성도 최고)<br>
+      급하게 제안서만 필요할 때 → <strong>제안서 간편버전</strong><br>
+      공구 카드 만들 때 → <strong>공구카드 메이커</strong>
+    </div>
+  </div>
+
+</div>
+
+<!-- ════════════════════════════════
+  🏪 입점 탭
+════════════════════════════════ -->
+<div class="tab-content" id="tab-ipjum">
+
+  <div class="section">
+    <div class="section-label">🏪 입점 탭</div>
+    <div class="section-title">입점 현황 관리 + 소통방</div>
+    <div class="section-desc">내 입점 진행 상황을 단계별로 관리하고, 수강생끼리 정보를 나눠요.</div>
+
+    <div class="feature">
+      <div class="feature-icon" style="background:#FDF2EA">✉️</div>
+      <div class="feature-body">
+        <div class="feature-name">입점제안 메일 생성기 <span class="badge badge-new">NEW</span></div>
+        <div class="feature-detail">
+          입점 제안 메일을 <strong>3분이면 완성</strong>할 수 있어요.<br>
+          제품 정보만 입력하면 메일이 자동으로 만들어지고, 카테고리별 <strong>실제 성과 수치</strong>가 자동으로 들어가요.
+        </div>
+        <div class="steps">
+          <div class="step"><div class="step-num">1</div><div class="step-txt"><strong>내 이름 · 직책 입력</strong> (서명 자동 생성)</div></div>
+          <div class="step"><div class="step-num">2</div><div class="step-txt"><strong>카테고리 선택</strong> — 식품 / 유아동 / 생활 / 뷰티 / 패션 / 반려동물</div></div>
+          <div class="step"><div class="step-num">3</div><div class="step-txt"><strong>제품명 입력</strong> (띄어쓰기 포함 전체)</div></div>
+          <div class="step"><div class="step-num">4</div><div class="step-txt"><strong>업체명 입력</strong> (모르면 미정 클릭 → 메일에 '귀사'로 표시)</div></div>
+          <div class="step"><div class="step-num">5</div><div class="step-txt"><strong>제품 특징 한 줄 입력</strong> (선택, 없으면 건너뛰기)</div></div>
+          <div class="step"><div class="step-num">6</div><div class="step-txt"><strong>제목 4가지 + 본문 4가지</strong> 중 골라서 복사 → 발송!</div></div>
+        </div>
+        <div class="tip tip-warn" style="margin-top:10px">
+          ⚠️ <strong>메일 보낼 때 아래 두 파일 꼭 첨부하세요!</strong><br>
+          📎 입점제안서 → 셀럽즈 벤더몰에서 다운로드<br>
+          📎 판매 레퍼런스 → 공지사항 이용가이드/입점 글에서 다운로드
+        </div>
+      </div>
+    </div>
+
+    <div class="feature">
+      <div class="feature-icon" style="background:#EBF5FD">🏪</div>
+      <div class="feature-body">
+        <div class="feature-name">입점 현황 관리</div>
+        <div class="feature-detail">
+          입점 진행 상황을 <strong>6단계</strong>로 나눠서 관리해요.<br>
+          📤 입점제안완료 → 📞 입점연락 옴 → ⚙️ 입점진행중 → ✅ 신청완료 → 🎉 입점완료<br><br>
+          <strong>입점완료</strong> 된 제품에서 이슈가 생기면 <strong>⚠️ 이슈 발생 신고</strong> 버튼으로 신고하면<br>
+          공구탭 제품이슈에 자동으로 공개돼서 다른 수강생들도 알 수 있어요.<br><br>
+          입점 연락이 왔을 때 <strong>💬 메리에게 공유!</strong> 버튼으로 바로 카카오톡 공유 가능!
+        </div>
+      </div>
+    </div>
+
+    <div class="feature">
+      <div class="feature-icon" style="background:#E8F7EE">🤝</div>
+      <div class="feature-body">
+        <div class="feature-name">입점소통방 <span class="badge badge-new">NEW</span></div>
+        <div class="feature-detail">
+          입점 제안하다 <strong>거절당한 업체를 수강생끼리 공유</strong>하는 공간이에요.<br>
+          한 명이 거절당한 업체, 다음 사람은 안 가도 되잖아요 🙏<br><br>
+          <strong>제안 전에 꼭 검색 먼저!</strong> 이미 등록된 업체인지 확인하고 제안하세요.<br>
+          거절당했으면 업체명 + 제품명 + 이유까지 등록해주면 다음 사람이 시간을 아낄 수 있어요.<br>
+          등록자 이름은 첫 글자만 공개돼요 (익명 보호).
+        </div>
+      </div>
+    </div>
+
+    <div class="tip tip-green">
+      <strong>💡 입점탭 활용 순서</strong><br>
+      제안 전 → 입점소통방 검색 확인<br>
+      메일 작성 → ✉️ 메일 생성기 활용<br>
+      제안 후 → 입점현황에 단계별 등록<br>
+      거절당하면 → 입점소통방에 등록해서 공유
+    </div>
+  </div>
+
+</div>
+
+<!-- ════════════════════════════════
+  📢 공지 탭
+════════════════════════════════ -->
+<div class="tab-content" id="tab-notice">
+
+  <div class="section">
+    <div class="section-label">📢 공지 탭</div>
+    <div class="section-title">메리의 공지사항</div>
+    <div class="section-desc">중요한 공지는 여기서 확인하세요. 놓치면 손해인 내용들이 올라와요.</div>
+
+    <div class="feature">
+      <div class="feature-icon" style="background:#FDF2EA">📌</div>
+      <div class="feature-body">
+        <div class="feature-name">상단 고정 공지</div>
+        <div class="feature-detail">
+          가장 중요한 공지는 <strong>📌 상단에 고정</strong>돼요.<br>
+          항상 먼저 확인해주세요 — 교육 일정, 중요 안내 등이 올라와요.
+        </div>
+      </div>
+    </div>
+
+    <div class="feature">
+      <div class="feature-icon" style="background:#FFF0EC">🆕</div>
+      <div class="feature-body">
+        <div class="feature-name">NEW 표시</div>
+        <div class="feature-detail">
+          아직 읽지 않은 공지에는 <strong>NEW 뱃지</strong>가 붙어요.<br>
+          탭 버튼에도 숫자가 표시돼서 얼마나 안 읽었는지 바로 알 수 있어요.<br>
+          공지를 열면 자동으로 읽음 처리돼요.
+        </div>
+      </div>
+    </div>
+
+    <div class="feature">
+      <div class="feature-icon" style="background:#E8F7EE">🔔</div>
+      <div class="feature-body">
+        <div class="feature-name">새 공지 팝업</div>
+        <div class="feature-detail">
+          캘린더에 접속하면 <strong>읽지 않은 공지가 있을 때 자동으로 팝업</strong>이 떠요.<br>
+          팝업에서 바로 전체 공지 보기로 이동할 수 있어요.
+        </div>
+      </div>
+    </div>
+
+    <div class="tip">
+      <strong>💡 공지는 꼭 읽어주세요!</strong><br>
+      교육 일정 변경, 새 기능 안내, 중요 공지가 여기 올라와요.<br>
+      NEW 표시가 있으면 바로 확인하는 습관을 들여주세요 😊
+    </div>
+  </div>
+
+</div>
+
+<!-- ════════════════════════════════
+  📆 교육일정 탭
+════════════════════════════════ -->
+<div class="tab-content" id="tab-edu">
+
+  <div class="section">
+    <div class="section-label">📆 교육일정 탭</div>
+    <div class="section-title">월별 교육 일정 캘린더</div>
+    <div class="section-desc">오프교육, 줌스터디, 피드백 일정을 월별로 확인할 수 있어요.</div>
+
+    <div class="feature">
+      <div class="feature-icon" style="background:#FFCDD2">🌸</div>
+      <div class="feature-body">
+        <div class="feature-name">오프교육</div>
+        <div class="feature-detail">
+          <strong>대면 오프라인 교육</strong> 일정이에요.<br>
+          신청은 공지사항 또는 메리 공지를 통해 별도로 진행돼요.
+        </div>
+      </div>
+    </div>
+
+    <div class="feature">
+      <div class="feature-icon" style="background:#E1BEE7">💜</div>
+      <div class="feature-body">
+        <div class="feature-name">줌스터디 / 줌교육</div>
+        <div class="feature-detail">
+          <strong>온라인 줌</strong>으로 진행되는 스터디 및 교육이에요.<br>
+          링크는 당일 카카오 공지로 안내돼요.
+        </div>
+      </div>
+    </div>
+
+    <div class="feature">
+      <div class="feature-icon" style="background:#FFF9C4">💛</div>
+      <div class="feature-body">
+        <div class="feature-name">피드백만 진행</div>
+        <div class="feature-detail">
+          별도 교육 없이 <strong>1:1 또는 그룹 피드백만</strong> 진행되는 날이에요.
+        </div>
+      </div>
+    </div>
+
+    <div class="feature">
+      <div class="feature-icon" style="background:#ECEFF1">🩶</div>
+      <div class="feature-body">
+        <div class="feature-name">휴일</div>
+        <div class="feature-detail">
+          교육이 없는 날이에요. 긴급 피드백 외 교육 휴무예요.
+        </div>
+      </div>
+    </div>
+
+    <div class="feature">
+      <div class="feature-icon" style="background:#F0F4C3">📝</div>
+      <div class="feature-body">
+        <div class="feature-name">이달의 안내사항</div>
+        <div class="feature-detail">
+          캘린더 아래에 <strong>이달에 꼭 알아야 할 안내사항</strong>이 표시돼요.<br>
+          교육 신청 방법, 특이사항 등 중요 내용이 여기 올라와요.
+        </div>
+      </div>
+    </div>
+
+    <div class="tip">
+      <strong>💡 일정 일자를 누르면</strong> 해당 교육의 상세 내용을 확인할 수 있어요.<br>
+      ‹ › 버튼으로 이전/다음 달도 미리 볼 수 있어요.
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  <strong>인플즈메리네 챌린지 캘린더 이용가이드</strong><br>
+  궁금한 점은 카카오 오픈채팅방으로 문의해주세요 😊<br>
+  <a href="https://marryz.co.kr/35" target="_blank" style="color:var(--p);font-weight:700;text-decoration:none">📱 챌린지 캘린더 바로가기 →</a>
+</div>
+
+<script>
+function switchTab(tab) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+  document.querySelector(`[onclick="switchTab('${tab}')"]`).classList.add('active');
+  document.getElementById('tab-' + tab).classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+</script>
+</body>
+</html>
