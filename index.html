@@ -322,6 +322,34 @@ body {
 .badge-new { background: var(--r); color: #fff; }
 .badge-update { background: #E8F7EE; color: #3A7D58; }
 
+/* ── 흐름 배지 */
+.flow-wrap {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-bottom: 14px;
+}
+.flow-chip {
+  background: var(--pl);
+  color: var(--p);
+  font-size: 11.5px;
+  font-weight: 900;
+  padding: 6px 12px;
+  border-radius: 20px;
+}
+.flow-arrow { color: var(--p); font-weight: 900; font-size: 12px; }
+
+/* ── 미니 스텝 (기능카드 안 작은 순서) */
+.mini-steps { display: flex; flex-direction: column; gap: 6px; margin-top: 10px; }
+.mini-step { display: flex; gap: 8px; font-size: 12.5px; color: var(--m); line-height: 1.8; word-break: keep-all; }
+.mini-step .n {
+  flex-shrink: 0; width: 18px; height: 18px; border-radius: 50%;
+  background: var(--pl); color: var(--p); font-size: 10px; font-weight: 900;
+  display: flex; align-items: center; justify-content: center; margin-top: 2px;
+}
+.mini-step strong { color: var(--t); }
+
 /* ── 툴 버튼 미리보기 */
 .tool-btns {
   display: flex;
@@ -594,30 +622,50 @@ strong { word-break: keep-all; }
 </div>
 
 <!-- ════════════════════════════════
-  🏪 입점 탭
+  🏪 입점 탭 (업데이트)
 ════════════════════════════════ -->
 <div class="tab-content" id="tab-ipjum">
 
   <div class="section">
-    <div class="section-label">🏪 입점 탭</div>
-    <div class="section-title">입점 현황 관리 + 소통방</div>
-    <div class="section-desc">내 입점 진행 상황을 단계별로 관리하고, 수강생끼리 정보를 나눠요.</div>
+    <div class="section-label">🏪 입점 탭 <span class="badge badge-update">업데이트</span></div>
+    <div class="section-title">서치 → 관리 → 소통방까지 한 번에</div>
+    <div class="section-desc">서브탭 순서가 바뀌었어요. 서치 메모부터 시작해서, 실제 제안을 보내면 입점관리로 옮기고, 거절당하면 그 자리에서 바로 소통방에 공유할 수 있어요.</div>
+
+    <div class="flow-wrap">
+      <span class="flow-chip">🔍 입점서치 메모</span><span class="flow-arrow">→</span>
+      <span class="flow-chip">📋 내 입점관리</span><span class="flow-arrow">→</span>
+      <span class="flow-chip">🤝 입점소통방</span>
+    </div>
+
+    <div class="feature">
+      <div class="feature-icon" style="background:#EBF5FD">🔍</div>
+      <div class="feature-body">
+        <div class="feature-name">입점서치 메모 <span class="badge badge-new">NEW</span></div>
+        <div class="feature-detail">
+          아직 제안 전, <strong>서치만 해둔 업체</strong>를 가볍게 메모해두는 공간이에요. 입점 탭에 들어가면 가장 먼저 보여요.
+        </div>
+        <div class="mini-steps">
+          <div class="mini-step"><span class="n">1</span><div><strong>회사명</strong> 입력 후 다른 칸으로 넘어가면 <strong>입점소통방에 거절 이력이 있는지 자동으로 검색</strong>돼요. 다른 수강생이 이미 거절당한 곳이면 바로 경고가 떠요.</div></div>
+          <div class="mini-step"><span class="n">2</span><div><strong>홈페이지주소, 제안방법(메일 / 협찬게시판)</strong> 선택 — 메일을 선택하면 <strong>메일주소</strong> 입력칸이 추가로 열려요.</div></div>
+          <div class="mini-step"><span class="n">3</span><div>제품명, 메모(팔로워 수·리뷰 수·진행 이력 등)까지 적고 <strong>📌 메모로 저장</strong></div></div>
+          <div class="mini-step"><span class="n">4</span><div>실제로 제안을 보내게 되면 <strong>🏪 입점관리로 옮기기</strong> 버튼 하나로 "입점제안완료" 상태로 바로 넘어가요. 적어둔 정보는 하나도 안 날아가요.</div></div>
+        </div>
+      </div>
+    </div>
 
     <div class="feature">
       <div class="feature-icon" style="background:#FDF2EA">✉️</div>
       <div class="feature-body">
-        <div class="feature-name">입점제안 메일 생성기 <span class="badge badge-new">NEW</span></div>
+        <div class="feature-name">입점제안 메일 생성기 <span class="badge badge-update">위치 이동</span></div>
         <div class="feature-detail">
-          입점 제안 메일을 <strong>3분이면 완성</strong>할 수 있어요.<br>
+          <strong>입점서치 메모 탭 맨 위</strong>로 자리를 옮겼어요 — 메모 작성 전후로 바로 메일 초안을 만들 수 있게요.<br>
           제품 정보만 입력하면 메일이 자동으로 만들어지고, 카테고리별 <strong>실제 성과 수치</strong>가 자동으로 들어가요.
         </div>
         <div class="steps">
           <div class="step"><div class="step-num">1</div><div class="step-txt"><strong>내 이름 · 직책 입력</strong> (서명 자동 생성)</div></div>
           <div class="step"><div class="step-num">2</div><div class="step-txt"><strong>카테고리 선택</strong> — 식품 / 유아동 / 생활 / 뷰티 / 패션 / 반려동물</div></div>
-          <div class="step"><div class="step-num">3</div><div class="step-txt"><strong>제품명 입력</strong> (띄어쓰기 포함 전체)</div></div>
-          <div class="step"><div class="step-num">4</div><div class="step-txt"><strong>업체명 입력</strong> (모르면 미정 클릭 → 메일에 '귀사'로 표시)</div></div>
-          <div class="step"><div class="step-num">5</div><div class="step-txt"><strong>제품 특징 한 줄 입력</strong> (선택, 없으면 건너뛰기)</div></div>
-          <div class="step"><div class="step-num">6</div><div class="step-txt"><strong>제목 4가지 + 본문 4가지</strong> 중 골라서 복사 → 발송!</div></div>
+          <div class="step"><div class="step-num">3</div><div class="step-txt"><strong>제품명 · 업체명 입력</strong> (모르면 미정 클릭 → 메일에 '귀사'로 표시)</div></div>
+          <div class="step"><div class="step-num">4</div><div class="step-txt"><strong>제목 4가지 + 본문 4가지</strong> 중 골라서 복사 → 발송!</div></div>
         </div>
         <div class="tip tip-warn" style="margin-top:10px">
           ⚠️ <strong>메일 보낼 때 아래 두 파일 꼭 첨부하세요!</strong><br>
@@ -628,15 +676,32 @@ strong { word-break: keep-all; }
     </div>
 
     <div class="feature">
-      <div class="feature-icon" style="background:#EBF5FD">🏪</div>
+      <div class="feature-icon" style="background:#EBF5FD">📋</div>
       <div class="feature-body">
-        <div class="feature-name">입점 현황 관리</div>
+        <div class="feature-name">내 입점관리 <span class="badge badge-update">업데이트</span></div>
         <div class="feature-detail">
-          입점 진행 상황을 <strong>6단계</strong>로 나눠서 관리해요.<br>
+          입점 진행 상황을 단계별로 관리해요.<br>
           📤 입점제안완료 → 📞 입점연락 옴 → ⚙️ 입점진행중 → ✅ 신청완료 → 🎉 입점완료<br><br>
-          <strong>입점완료</strong> 된 제품에서 이슈가 생기면 <strong>⚠️ 이슈 발생 신고</strong> 버튼으로 신고하면<br>
-          공구탭 제품이슈에 자동으로 공개돼서 다른 수강생들도 알 수 있어요.<br><br>
+          <strong>회사명, 제안방법, 제안발송일</strong>까지 기록하고, <strong>입점사목록 체크 / 소통방 기록</strong> 체크리스트로 진행 여부를 표시해요.<br>
+          <strong>제안발송일 기준 7일이 지나면</strong> 카드에 "⚠️ 팔로업 필요" 알림이 자동으로 떠요 — 연락 없는 업체를 놓치지 않게요.<br>
+          회사명을 적어두면 이 카드에서도 <strong>입점소통방 거절 이력을 자동으로 확인</strong>해서 보여줘요.<br><br>
+          <strong>입점완료</strong> 된 제품에서 이슈가 생기면 <strong>⚠️ 이슈 발생 신고</strong> 버튼으로 신고하면 공구탭 제품이슈에 자동으로 공개돼서 다른 수강생들도 알 수 있어요.<br>
           입점 연락이 왔을 때 <strong>💬 메리에게 공유!</strong> 버튼으로 바로 카카오톡 공유 가능!
+        </div>
+      </div>
+    </div>
+
+    <div class="feature">
+      <div class="feature-icon" style="background:#FFF5F5">🔴</div>
+      <div class="feature-body">
+        <div class="feature-name">거절 처리 <span class="badge badge-new">NEW</span></div>
+        <div class="feature-detail">
+          제안했다가 거절당했다면, 입점소통방에 따로 안 가도 <strong>이 카드에서 바로 처리</strong>할 수 있어요.
+        </div>
+        <div class="mini-steps">
+          <div class="mini-step"><span class="n">1</span><div>카드에서 <strong>🔴 이 업체 거절 처리하기</strong> 클릭</div></div>
+          <div class="mini-step"><span class="n">2</span><div><strong>거절 사유만</strong> 한 줄 입력 (회사명·제품명은 이미 있어서 다시 안 적어도 돼요)</div></div>
+          <div class="mini-step"><span class="n">3</span><div><strong>🔴 거절 등록 + 소통방 자동 공유</strong> 클릭하면 카드는 "거절"로 바뀌고, 동시에 입점소통방에도 자동으로 등록돼요</div></div>
         </div>
       </div>
     </div>
@@ -644,12 +709,12 @@ strong { word-break: keep-all; }
     <div class="feature">
       <div class="feature-icon" style="background:#E8F7EE">🤝</div>
       <div class="feature-body">
-        <div class="feature-name">입점소통방 <span class="badge badge-new">NEW</span></div>
+        <div class="feature-name">입점소통방</div>
         <div class="feature-detail">
           입점 제안하다 <strong>거절당한 업체를 수강생끼리 공유</strong>하는 공간이에요.<br>
           한 명이 거절당한 업체, 다음 사람은 안 가도 되잖아요 🙏<br><br>
-          <strong>제안 전에 꼭 검색 먼저!</strong> 이미 등록된 업체인지 확인하고 제안하세요.<br>
-          거절당했으면 업체명 + 제품명 + 이유까지 등록해주면 다음 사람이 시간을 아낄 수 있어요.<br>
+          <strong>업체명·제품명으로 검색</strong>해서 미리 확인할 수 있고, <strong>🔴 거절 업체 등록하기</strong> 버튼으로 직접 등록도 여전히 가능해요 (내가 입점 안 한 업체 정보도 등록 가능).<br>
+          입점서치 메모나 내 입점관리에서 거절 이력이 있는 업체를 발견하면 <strong>🔎 자세히 보기</strong> 버튼으로 바로 이 탭 + 검색까지 한 번에 연결돼요.<br>
           등록자 이름은 첫 글자만 공개돼요 (익명 보호).
         </div>
       </div>
@@ -657,10 +722,11 @@ strong { word-break: keep-all; }
 
     <div class="tip tip-green">
       <strong>💡 입점탭 활용 순서</strong><br>
-      제안 전 → 입점소통방 검색 확인<br>
+      서치하다 발견 → 입점서치 메모에 기록 (자동으로 거절이력 체크)<br>
       메일 작성 → ✉️ 메일 생성기 활용<br>
-      제안 후 → 입점현황에 단계별 등록<br>
-      거절당하면 → 입점소통방에 등록해서 공유
+      제안 결심 → 🏪 입점관리로 옮기기<br>
+      제안 후 → 발송일 기록, 7일 지나면 자동 팔로업 알림<br>
+      거절당하면 → 카드에서 사유만 입력해 바로 거절 처리 (소통방 자동 공유)
     </div>
   </div>
 
